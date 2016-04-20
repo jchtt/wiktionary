@@ -1,0 +1,325 @@
+[{entries: [{etymology: "{{etyl|ML.|en}} {{m|la|dictionarium}}, from {{etyl|la|en}}\
+          \ {{m|la|dictionarius}}, from {{m|la|dictio||speaking}}, from {{m|la|dictus}},\
+          \ perfect past participle of {{m|la|d\u012Bc\u014D||speak}} + {{m|la|-arium||room,\
+          \ place}}.\n", partsOfSpeech: [noun], pronunciations: [{note: RP, text: "/\u02C8\
+              d\u026Ak\u0283(\u0259)n(\u0259)\u0279\u026A/"}, {note: null, text: "/\u02C8\
+              d\u026Ak\u0283\u0259n\u025B\u0279i/"}], senses: [{gloss: 'A [[reference
+              work]] with a list of [[word]]s from one or more languages, normally
+              ordered [[alphabetical]]ly and explaining each word''s meaning and sometimes
+              containing information on its etymology, usage, translations{{,}} and
+              other data.
+
+              ', quotations: [{quote: '{{quote-book|year=1988|author=Andrew Radford|title=Trasformational
+                  grammar: a first course|location=Cambridge, UK|publisher=Cambridge
+                  University Press|page=339|chapter=7}}
+
+                  But what other kind(s) of syntactic information should be included
+                  in Lexical Entries? Traditional ''''''dictionaries'''''' such as
+                  Hornby''s (1974) ''''Oxford Advanced Learner''s ''''''Dictionary''''''
+                  of Current English'''' include not only ''''categorial'''' information
+                  in their entries, but also information about the range of ''''Complements''''
+                  which a given item permits (this information is represented by the
+                  use of a number/letter code).
+
+                  '}]}, {gloss: 'By extension, any work that has a list of material
+              organized alphabetically; e.g. biographical dictionary, encyclopedic
+              dictionary.
+
+              '}, {gloss: '{{label|en|computing}} An [[associative array]], a data
+              structure where each value is referenced by a particular key, analogous
+              to words and definitions in a physical dictionary.
+
+              ', quotations: [{quote: 'User calls <code>RouteCollection.GetVirtualPath</code>,
+                  passing in a <code>RequestContext</code>, a ''''''dictionary''''''
+                  of values, and an optional route name used to select the correct
+                  route to generate the URL. * {{seeCites}}
+
+                  '}]}], word: dictionary, wordForms: [{form: dictionaries, number: plural}]},
+      {etymology: "{{etyl|ML.|en}} {{m|la|dictionarium}}, from {{etyl|la|en}} {{m|la|dictionarius}},\
+          \ from {{m|la|dictio||speaking}}, from {{m|la|dictus}}, perfect past participle\
+          \ of {{m|la|d\u012Bc\u014D||speak}} + {{m|la|-arium||room, place}}.\n",
+        partsOfSpeech: [verb], pronunciations: [{note: RP, text: "/\u02C8d\u026Ak\u0283\
+              (\u0259)n(\u0259)\u0279\u026A/"}, {note: null, text: "/\u02C8d\u026A\
+              k\u0283\u0259n\u025B\u0279i/"}], senses: [{gloss: '{{label|en|transitive}}
+              To look up in a dictionary.
+
+              '}, {gloss: '{{label|en|transitive}} To add to a dictionary.
+
+              ', quotations: [{quote: 'By a reference to the following ''''''dictionaried''''''
+                  abbreviations, the simplicity and harmony of each sentence will
+                  be manifestly apparent; although it does not embrace everything,
+                  and could not, as it would be far too voluminous for general use.
+
+                  '}, {quote: 'Should I use a word that a lot of people use but isn''t
+                  in the dictionary? Uncle Phil would rather get a root canal than
+                  say he was scrapbooking, because the word isn''t ''''''dictionaried''''''.
+
+                  '}]}, {gloss: '{{label|en|intransitive|rare}} To [[compile]] a dictionary.
+
+              ', quotations: [{quote: "They [dictionary-makers] may have had their\
+                  \ romance at home \u2014 may have been crossed in love, and thence\
+                  \ driven to '''dictionarying'''; may have been involved in domestic\
+                  \ tragedies \u2014 who can say?\n"}]}, {gloss: '{{label|en|intransitive}}
+              To appear in a dictionary.
+
+              '}], word: dictionary}], title: dictionary}, {entries: [{etymology: "From\
+          \ {{etyl|enm|en}} {{term|fre||lang=enm}}, from {{etyl|ang|en}} {{m|ang|fr\u0113\
+          o}}, {{etyl|gem-pro|en}} {{m|gem-pro|*frijaz}}, from {{etyl|ine-pro|en}}\
+          \ {{m|ine-pro|*prei-||to be fond of}}, {{m|ine-pro|*prey-}}. Compare West\
+          \ Frisian {{term|frij|lang=fy}}, Dutch {{term|vrij|lang=nl}}, Low German\
+          \ {{term|free|lang=nds}}, German {{term|frei|lang=de}}, Danish {{term|fri|lang=da}}.The\
+          \ verb comes from {{etyl|ang|en}} {{m|ang|fr\u0113o\u0121an}}.\n", partsOfSpeech: [
+          adjective], pronunciations: [{note: null, text: "/f\u0279i\u02D0/"}], senses: [
+          {examples: [{example: '{{ux|en|He was given ''''''free'''''' rein to do
+                  whatever he wanted.}}
+
+                  '}, {example: '{{ux|en|a ''''''free'''''' man}}
+
+                  '}, {example: '{{ux|en|He''s very ''''''free'''''' with his money.}}
+
+                  '}, {example: '{{ux|en|''''''free'''''' time}}
+
+                  '}, {example: '{{ux|en|a ''''''free'''''' school}}
+
+                  '}, {example: '{{ux|en|This is a ''''''free'''''' country.}}
+
+                  '}, {example: '{{ux|en|OpenOffice is [[free software|''''''free''''''
+                  software]].}}
+
+                  '}], gloss: '{{label|en|social}} [[unconstrained|Unconstrained]].
+
+              Not [[imprisoned]] or [[enslaved]].
+
+              Unconstrained by timidity or distrust; unreserved; frank; communicative.
+
+              Generous; liberal.
+
+              {{label|en|obsolete}} Clear of offence or crime; guiltless; innocent.
+
+              Without [[obligation]]s.
+
+              Thrown open, or made accessible, to all; to be enjoyed without limitations;
+              unrestricted; not obstructed, engrossed, or appropriated; open; said
+              of a thing to be possessed or enjoyed.
+
+              Not arbitrary or despotic; assuring liberty; defending individual rights
+              against encroachment by any person or class; instituted by a free people;
+              said of a government, institutions, etc.
+
+              {{label|en|software}} With no or only freedom-preserving [[limitation]]s
+              on distribution or modification.
+
+              {{label|en|software}} Intended for [[release]], as opposed to a [[checked]]
+              version.
+
+              ', quotations: [{quote: "{{quote-book|year=1899|author={{w|Stephen Crane}}\
+                  \ |title=[[s:Twelve O'Clock|Twelve O'Clock]]|chapter=1 |passage=There\
+                  \ was some laughter, and Roddle was left '''free''' to expand his\
+                  \ ideas on the periodic visits of cowboys to the town. \u201CMason\
+                  \ Rickets, he had ten big punkins a-sittin' in front of his store,\
+                  \ an' them fellers from the Upside-down-F ranch shot 'em up [\u2026\
+                  ].\u201D}}\n"}, {quote: '{{quote-magazine|date=2013-08-10|volume=408|issue=8848|magazine={{w|The
+                  Economist}}|author=Schumpeter |title=[http://www.economist.com/news/business/21583242-businesspeople-have-become-too-influential-government-cronies-and-capitols
+                  Cronies and capitols] |passage=Policing the relationship between
+                  government and business in a ''''''free'''''' society is difficult.
+                  Businesspeople have every right to lobby governments, and civil
+                  servants to take jobs in the private sector.}}
+
+                  '}, {quote: 'He was ''''''free'''''' only with a few.
+
+                  '}, {quote: '{{w|John Dryden}} (1631-1700)
+
+                  My hands are guilty, but my heart is ''''''free''''''.
+
+                  '}, {quote: '{{w|William Shakespeare}} (1564-1616)
+
+                  Why, sir, I pray, are not the streets as ''''''free'''''' / For
+                  me as for you?
+
+                  '}]}, {examples: [{example: '{{ux|en|The government provides ''''''free''''''
+                  health care.}}
+
+                  '}, {example: '{{ux|en|Buy a TV to get a ''''''free'''''' DVD player!}}
+
+                  '}], gloss: 'Obtainable without any [[payment]].
+
+              {{label|en|by extension|chiefly|advertising slang}} Obtainable without
+              additional payment, as a bonus given when paying for something else.
+
+              ', quotations: [{quote: '{{quote-magazine|date=2013-07-20|volume=408|issue=8845|magazine={{w|The
+                  Economist}} |title=[http://www.economist.com/news/http://www.economist.com/news/business/21582001-army-new-online-courses-scaring-wits-out-traditional-universities-can-they
+                  The attack of the MOOCs] |passage=Since the launch early last year
+                  of&nbsp;[&hellip;] two Silicon Valley start-ups offering ''''''free''''''
+                  education through MOOCs, massive open online courses, the ivory
+                  towers of academia have been shaken to their foundations. University
+                  brands built in some cases over centuries have been forced to contemplate
+                  the possibility that information technology will rapidly make their
+                  existing business model obsolete.}}
+
+                  '}]}, {examples: [{example: '{{ux|en|the ''''''free'''''' group
+                  on three generators}}
+
+                  '}, {example: '{{ux|en|<math>z</math> is the ''''''free'''''' variable
+                  in <math>\forall x\exists y:xy=z</math>.}}
+
+                  '}], gloss: '{{label|en|abstract}} [[unconstrained|Unconstrained]].
+
+              {{label|en|mathematics}} Unconstrained by [[relator]]s.
+
+              {{label|en|mathematics|logic}} Unconstrained by [[quantifier]]s.
+
+              {{label|en|programming}} Of [[identifier]]s, not [[bound]].
+
+              {{label|en|of a|morpheme}} That can be used by itself, [[unattached]]
+              to another [[morpheme]].
+
+              '}, {examples: [{example: '{{ux|en|the drain was ''''''free''''''}}
+
+                  '}, {example: '{{ux|en|a ''''''free'''''' radical}}
+
+                  '}, {example: '{{ux|en|You can sit on this chair; it''s ''''''free''''''.}}
+
+                  '}, {example: '{{ux|en|In this group of mushrooms, the gills are
+                  ''''''free''''''.}}
+
+                  '}], gloss: '{{label|en|physical}} [[unconstrained|Unconstrained]].
+
+              Unobstructed, without [[blockage]]s.
+
+              Unattached or uncombined.
+
+              Not currently in use; not taken; unoccupied.
+
+              {{label|en|botany|mycology}} Not [[attached]]; [[loose]].
+
+              ', quotations: [{quote: '{{RQ:Schuster Hepaticae V|7}}
+
+                  Furthermore, the ''''''free'''''' anterior margin of the lobule
+                  is arched toward the lobe and is often involute{{...}}
+
+                  '}]}, {examples: [{example: '{{ux|en|We had a wholesome, filling
+                  meal, ''''''free'''''' of meat.&emsp; I would like to live ''''''free''''''
+                  from care in the mountains.}}
+
+                  '}], gloss: 'Without; not containing (what is specified); exempt;
+              clear; liberated.
+
+              ', quotations: [{quote: '{{w|Thomas Burnet|Bishop Burnet}} (1635?-1715)
+
+                  princes declaring themselves ''''''free'''''' from the obligations
+                  of their treaties
+
+                  '}, {quote: '{{quote-book|year=1898|author={{w|Winston Churchill
+                  (novelist)|Winston Churchill}} |title={{w|The Celebrity}}|chapter=4
+                  |passage=One morning I had been driven to the precarious refuge
+                  afforded by the steps of the inn, after rejecting offers from the
+                  Celebrity to join him in a variety of amusements. But even here
+                  I was not ''''''free'''''' from interruption, for he was seated
+                  on a horse-block below me, playing with a fox terrier.}}
+
+                  '}]}, {examples: [{example: '{{ux|en|a ''''''free'''''' horse}}
+
+                  '}], gloss: '{{label|en|dated}} Ready; eager; acting without spurring
+              or whipping; spirited.
+
+              '}, {gloss: '{{label|en|dated}} Invested with a particular freedom or
+              franchise; enjoying certain immunities or privileges; admitted to special
+              rights; followed by ''''of''''.
+
+              ', quotations: [{quote: '{{w|John Dryden}} (1631-1700)
+
+                  He therefore makes all birds, of every sect, / ''''''Free''''''
+                  of his farm.
+
+                  '}]}, {examples: [{example: '{{ux|en|''''''free'''''' service;&emsp;
+                  ''''''free'''''' socage}}
+
+                  '}, {example: '{{rfquotek|Burrill}}
+
+                  '}], gloss: '{{label|en|UK|legal|obsolete}} Certain or honourable;
+              the opposite of ''''[[base]]''''.
+
+              '}, {examples: [{example: '{{ux|en|a ''''''free'''''' fishery;&emsp;
+                  a ''''''free'''''' warren}}
+
+                  '}, {example: '{{rfquotek|Burrill}}
+
+                  '}], gloss: '{{label|en|legal}} Privileged or individual; the opposite
+              of ''''[[common]]''''.
+
+              '}], word: free, wordForms: [{degree: positive, form: free}, {degree: comparative,
+            form: freeer}, {degree: superlative, form: freeest}]}, {etymology: "From\
+          \ {{etyl|enm|en}} {{term|fre||lang=enm}}, from {{etyl|ang|en}} {{m|ang|fr\u0113\
+          o}}, {{etyl|gem-pro|en}} {{m|gem-pro|*frijaz}}, from {{etyl|ine-pro|en}}\
+          \ {{m|ine-pro|*prei-||to be fond of}}, {{m|ine-pro|*prey-}}. Compare West\
+          \ Frisian {{term|frij|lang=fy}}, Dutch {{term|vrij|lang=nl}}, Low German\
+          \ {{term|free|lang=nds}}, German {{term|frei|lang=de}}, Danish {{term|fri|lang=da}}.The\
+          \ verb comes from {{etyl|ang|en}} {{m|ang|fr\u0113o\u0121an}}.\n", partsOfSpeech: [
+          adverb], pronunciations: [{note: null, text: "/f\u0279i\u02D0/"}], senses: [
+          {examples: [{example: '''''I got this bike ''''''free''''''.''''
+
+                  '}], gloss: 'Without needing to [[pay]].
+
+              '}, {gloss: '{{context|obsolete|lang=en}} Freely; willingly.
+
+              ', quotations: [{quote: 'I as ''''''free'''''' forgive you / As I would
+                  be forgiven.
+
+                  '}]}], word: free}, {etymology: "From {{etyl|enm|en}} {{term|fre||lang=enm}},\
+          \ from {{etyl|ang|en}} {{m|ang|fr\u0113o}}, {{etyl|gem-pro|en}} {{m|gem-pro|*frijaz}},\
+          \ from {{etyl|ine-pro|en}} {{m|ine-pro|*prei-||to be fond of}}, {{m|ine-pro|*prey-}}.\
+          \ Compare West Frisian {{term|frij|lang=fy}}, Dutch {{term|vrij|lang=nl}},\
+          \ Low German {{term|free|lang=nds}}, German {{term|frei|lang=de}}, Danish\
+          \ {{term|fri|lang=da}}.The verb comes from {{etyl|ang|en}} {{m|ang|fr\u0113\
+          o\u0121an}}.\n", partsOfSpeech: [verb], pronunciations: [{note: null, text: "/f\u0279\
+              i\u02D0/"}], senses: [{gloss: '{{context|transitive|lang=en}} To make
+              free; set at [[liberty]]; [[release]]; rid of that which confines, limits,
+              embarrasses, or oppresses.
+
+              '}], word: free}, {etymology: "From {{etyl|enm|en}} {{term|fre||lang=enm}},\
+          \ from {{etyl|ang|en}} {{m|ang|fr\u0113o}}, {{etyl|gem-pro|en}} {{m|gem-pro|*frijaz}},\
+          \ from {{etyl|ine-pro|en}} {{m|ine-pro|*prei-||to be fond of}}, {{m|ine-pro|*prey-}}.\
+          \ Compare West Frisian {{term|frij|lang=fy}}, Dutch {{term|vrij|lang=nl}},\
+          \ Low German {{term|free|lang=nds}}, German {{term|frei|lang=de}}, Danish\
+          \ {{term|fri|lang=da}}.The verb comes from {{etyl|ang|en}} {{m|ang|fr\u0113\
+          o\u0121an}}.\n", partsOfSpeech: [noun], pronunciations: [{note: null, text: "/f\u0279\
+              i\u02D0/"}], senses: [{gloss: '{{context|Australian rules football|Gaelic
+              football|lang=en}} Abbreviation of [[free kick]].
+
+              ', quotations: [{quote: 'Whether deserved or not, the ''''''free''''''
+                  gave Cresswell the chance to cover himself in glory with a shot
+                  on goal after the siren.
+
+                  '}]}, {gloss: '[[free transfer]]
+
+              ', quotations: [{quote: '{{quote-news |year=2011 |date=September 21
+                  |author=Sam Lyon |title=Man City 2 - 0 Birmingham |work=BBC Sport
+                  |url=http://news.bbc.co.uk/sport2/hi/football/14910208.stm |page=
+                  |passage=Hargreaves, who left Manchester United on a ''''''free''''''
+                  during the summer, drilled a 22-yard beauty to open the scoring.}}
+
+                  '}]}, {gloss: '{{context|hurling|lang=en}} The usual means of restarting
+              play after a foul is committed, where the non-offending team restarts
+              from where the foul was committed.
+
+              '}], word: free, wordForms: [{form: frees, number: plural}]}], title: free},
+  {entries: [{etymology: "16th century, from {{etyl|la|en}} {{term|th\u0113saurus|lang=la}},\
+          \ from {{etyl|grc|en}} {{term|\u03B8\u03B7\u03C3\u03B1\u03C5\u03C1\u03CC\
+          \u03C2||storehouse, treasure|tr=th\u0113sauros|lang=grc|sc=polytonic}};\
+          \ its current English usage/meaning was established soon after the publication\
+          \ of Peter Roget's ''Thesaurus of English Words and Phrases'' in 1852\n",
+        partsOfSpeech: [noun], pronunciations: [{note: null, text: "/\u03B8\u026A\u02C8\
+              s\u0254\u02D0\u0279\u0259s/"}], senses: [{examples: [{example: '''''"Roget"
+                  is the leading brand name for a print English ''''''thesaurus''''''''''
+                  that lists words under general concepts rather than just close synonyms.''''
+
+                  '}], gloss: 'A [[publication]], usually in the form of a [[book]],
+              that provides [[synonym]]s (and sometimes [[antonym]]s) for the [[word]]s
+              of a given [[language]].
+
+              '}, {gloss: '{{context|archaic|lang=en}} A [[dictionary]] or [[encyclopedia]].
+
+              '}, {gloss: "{{context|information science|lang=en}} A hierarchy of\
+              \ subject headings\u2014canonic titles of themes and topics, the titles\
+              \ serving as search keys.\n"}], word: thesaurus, wordForms: [{form: thesaurithesauruses,
+            number: plural}]}], title: thesaurus}]
