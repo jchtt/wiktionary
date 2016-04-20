@@ -41,7 +41,7 @@ def parse_wikitext(s):
 
 class translation_table:
     def __getitem__(self, ordinal):
-        if ordinal >= 65535:
+        if ordinal >= 65535 or (ordinal >= 0x7f and ordinal <= 0x9f):
             return "\u25AF"
         else:
             return ordinal
@@ -189,7 +189,7 @@ inputs = list(zip(numbers, in_files, out_files, repeat(opts)))
 counter = 0
 
 # Progress bar
-pbar = tqdm(total = len(in_contents), leave = True, initial = len(out_contents))
+pbar = tqdm(total = len(in_contents), leave = True, initial = len(out_contents), smoothing = 0.05)
 
 now = time.time()
 executor = ThreadPoolExecutor(nprocs)

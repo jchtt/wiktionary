@@ -20,7 +20,14 @@ import time
 
 import string
 import codecs
-import pattern.en as pat
+import pattern.en as en
+
+import multiprocessing as multip
+import os
+import signal
+import glob
+
+from tqdm import tqdm
 
 def escape_characters(text):
     # table = {0xa: '\\n', 0x5c: '\\'}
@@ -86,6 +93,9 @@ def stripHtml(s):
     r = soup.get_text().strip()
     return r
 
+def replace_newlines(text):
+    return re.sub(r'\n', r'/', text)
+
 def prep_string(string, lead = ' '):
     if not string:
         return ''
@@ -104,18 +114,35 @@ def assembleEntry(y):
     pronunciations = []
     pronunciation_entries = set();
     partsOfSpeech = []
+    partsOfSpeechHeads = []
     etymology_entries = set();
     synonyms = []
-    wordForms = []
+    word_forms = []
 
     # Preprocessing
     for entry in y.get('entries', []):
         # Parts of speech
-        psos = entry.get('partsOfSpeech')
+        psos = entry.get('partsOfSpeech') or []
+        try:
+            psos = map(lambda x: x.replace('proper_noun', 'proper noun'), psos)
+        except:
+            print(repr(psos))
+            print(y['title'])
+            raise
         if psos:
-            partsOfSpeech.append(" ,".join(psos))
+            partsOfSpeech.append(u"<B>" + u" ,".join(psos) + u"</B>")
+            partsOfSpeechHeads.append(psos[0])
         else:
             partsOfSpeech.append("")
+            partsOfSpeechHeads.append("")
+
+        # Word forms
+        elems = []
+        for wf in entry.get('wordForms') or []:
+            form = wf.get('form')
+            if form:
+                elems.append(form)
+        word_forms.append(elems)
 
         # Synonyms
         synonyms.append(clean_synonyms(entry.get('synonyms', [])))
@@ -123,6 +150,7 @@ def assembleEntry(y):
         # Pronunciations
         elems = []
         elem = ""
+        # print(entry.get('pronunciations', []))
         for pronunciation in entry.get('pronunciations', []):
             text = pronunciation.get('text')
             if text:
@@ -135,15 +163,16 @@ def assembleEntry(y):
                     elems.append(elem)
                     elem = ""
         pronunciations.append(", ".join(elems))
+        # print(repr(pronunciations[-1]))
 
         # Senses
         gloss_entry = []
         example_entry = []
         quote_entry = []
-        for sense in entry.get('senses', []):
+        for sense in entry.get('senses') or []:
             gloss_entry.append(stripHtml(sense.get('gloss', '')))
-            example_entry.append([ stripHtml(example.get('example', '')) for example in sense.get('examples', [])])
-            quote_entry.append([ stripHtml(quote.get('quote', '')) for quote in sense.get('quotations', [])])
+            example_entry.append([ replace_newlines(stripHtml(example.get('example', ''))) for example in sense.get('examples', [])])
+            quote_entry.append([ replace_newlines(stripHtml(quote.get('quote', ''))) for quote in sense.get('quotations', [])])
         glosses.append(gloss_entry)
         examples.append(example_entry)
         quotations.append(quote_entry)
@@ -166,22 +195,43 @@ def assembleEntry(y):
     # pronunciations_filtered = [text for entry in pronunciations for text in entry]
     pronunciations_filtered = list(filter(None, pronunciations))
     if len(pronunciations_filtered) == 1:
-        s += u" " + pronunciations_filtered[0]
+        s += u" " + pronunciations_filtered[0] + "<BR>"
     else:
         entry_pronuncs = True
 
-    # Glosses
+    # Entries & glosses
     single_entry = len(glosses) == 1
     for (entry_num, entry_glosses) in enumerate(glosses, 1):
+        if entry_num >= 2:
+            s += "<BR>"
         if not single_entry:
-            s += u" {0}.".format(roman.int_to_roman(entry_num))
+            s +=u"{0}. ".format(roman.int_to_roman(entry_num))
         if entry_pronuncs:
             s += prep_string(pronunciations[entry_num - 1])
-        s += prep_string(partsOfSpeech[entry_num - 1])
+        s += partsOfSpeech[entry_num - 1]
+
+        # Handle word forms
+        pos = partsOfSpeechHeads[entry_num - 1]
+        word = y['title']
+        if pos == "verb":
+            p = en.conjugate(word, 'p')
+            pp = en.conjugate(word, 'ppart')
+            if p != word + 'ed' or pp != word + 'ed':
+                s += u" (p. " + p + u", pp. " + pp + u")"
+        elif pos == "noun":
+            pl = en.pluralize(word)
+            if pl != word + u's':
+                s += u" (pl. " + pl + ")"
+        elif pos == "adjective":
+            pass
+
+        # Glosses
         single_gloss = len(entry_glosses) == 1
         for (gloss_num, gloss) in enumerate(entry_glosses, 1):
             if not single_gloss:
                 s += u" {0:d}.".format(gloss_num)
+            # else:
+            #     s += u":"
             s += u" {0}".format(gloss)
         s += prep_string(", ".join(synonyms[entry_num - 1]) + u"." if synonyms[entry_num - 1] else "", " Synonyms: ")
         s += prep_string(etymologies[entry_num - 1], u" Etymology: ")
@@ -189,7 +239,7 @@ def assembleEntry(y):
     # Examples and Quotes
     examples_flat = [example for entry in examples for examples in entry for example in examples if example]
     if examples_flat:
-        s += u" Examples:"
+        s += u"<BR><B>Examples:</B>"
         for (num_example, example) in enumerate(examples_flat, 1):
             if len(examples_flat) == 1:
                 s += " " + example
@@ -198,7 +248,7 @@ def assembleEntry(y):
 
     quotes_flat = [quote for entry in quotations for quotes in entry for quote in quotes if quote]
     if quotes_flat:
-        s += u" Quotations:"
+        s += u"<BR><B>Quotations:</B>"
         for (num_quote, quote) in enumerate(quotes_flat, 1):
             if len(quotes_flat) == 1:
                 s += u" " + quote
@@ -206,10 +256,69 @@ def assembleEntry(y):
                 s += u" {0:d}. {1}".format(num_quote, quote)
 
     s = escape_characters(s)
-    s = y['title'] + "\n" + s.strip()
+
+    word_forms_flat = [form for entry in word_forms for form in entry if form]
+    titles = [y['title']]
+    titles.extend(word_forms_flat)
+    if 'verb' in partsOfSpeechHeads:
+        titles.extend(en.lexeme(y['title']))
+    if 'noun' in partsOfSpeechHeads:
+        titles.append(en.pluralize(y['title']))
+    if 'adjective' in partsOfSpeechHeads:
+        adj_forms = [en.comparative(y['title']), en.superlative(y['title'])]
+        adj_forms = [form for form in adj_forms if len(form.split(' ')) == 1]
+        titles.extend(adj_forms)
+    titles = unique(titles)
+    if s.strip() == "":
+        s = "Empty article."
+    s = u'|'.join(titles) + u"\n" + s.strip()
 
     # return escape_characters(contract_tabs(s))
     return s
+
+def assembleHelper(work_q, done_q):
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    try:
+        for args in iter(work_q.get, 'STOP'):
+            number = args[0]
+            inFile = args[1]
+            outFile = args[2]
+            # print inFile
+            # print outFile
+        
+            with codecs.open(inFile, mode = 'r', encoding = 'utf-8') as handle:
+                content = handle.read()
+            y = yaml.load(content, Loader = Loader)
+            # print(len(y))
+            parsed = ""
+            for page in y:
+                parsed += assembleEntry(page) + '\n\n'
+            
+            with codecs.open(outFile, mode = 'w', encoding = 'utf-8') as handle:
+                # handle.write("\n#stripmethod=keep\n#sametypesequence=h\n\n")
+                handle.write(parsed)
+    
+            done_q.put(number)
+            # print('done')
+    except:
+        print('Error in job {:d}'.format(number))
+        emptyQueue(work_q)
+        raise
+
+def pbarHelper(work_q, done_q, pbar):
+    state = 'START'
+    while state != 'STOP':
+        state = done_q.get()
+        if state == 'STOP':
+            pbar.close()
+        else:
+            pbar.update(1)
+
+def emptyQueue(q):
+    for a in iter(q.get, 'STOP'):
+        pass
+    q.put('STOP')
+    print('emptied')
 
 ## Main program 
 
@@ -218,18 +327,73 @@ now = time.time()
 inDir = "/data/Development/Wiktionary/yaml-parsed/"
 outDir = "/data/Development/Wiktionary/dict/"
 
-inFile = inDir + "0064.yaml"
-with codecs.open(inFile, mode = 'r', encoding = 'utf-8') as handle:
-    content = handle.read()
-y = yaml.load(content, Loader = Loader)
-print(len(y))
-parsed = ""
-for page in y:
-    parsed += assembleEntry(page) + '\n\n'
+nprocs = 4
+pad = 4
 
-outFile = outDir + "0064.babylon"
-with codecs.open(outFile, mode = 'w', encoding = 'utf-8') as handle:
-    handle.write("\n#stripmethod=keep\n#sametypesequence=h\n\n")
-    handle.write(parsed)
+in_numbers = sorted([int(os.path.splitext(f)[0]) for f in os.listdir(inDir)])
+out_numbers = sorted([int(os.path.splitext(os.path.basename(f))[0]) for f in glob.glob(os.path.join(outDir,'*.babylon'))])
+new_numbers = sorted(set(in_numbers).difference(out_numbers))
+# numbers = [int(os.path.splitext(f)[0]) for f in new_files]
 
-print(time.time()-now)
+in_files = map(lambda x: os.path.join(inDir, str(x).zfill(pad) + ".yaml"), new_numbers)
+out_files = map(lambda x: os.path.join(outDir, str(x).zfill(pad) + ".babylon"), new_numbers)
+
+inputs = list(zip(new_numbers, in_files, out_files))
+counter = 0
+
+# Multiprocessing handling
+work_q = multip.Queue()
+done_q = multip.Queue()
+for task in inputs:
+    work_q.put(task)
+
+pbar = tqdm(total = len(in_numbers), leave = True, initial = len(out_numbers), smoothing = 0.05)
+
+procs = []
+for i in xrange(nprocs):
+    p = multip.Process(target = assembleHelper, args = (work_q, done_q))
+    p.start()
+    procs.append(p)
+    work_q.put('STOP')
+
+pbarProc = multip.Process(target = pbarHelper, args = (work_q, done_q, pbar))
+pbarProc.start()
+
+for p in procs:
+    try:
+        p.join()
+    except:
+        emptyQueue(work_q)
+        # p_empty = multip.Process(target = emptyQueue, args = (work_q,))
+        # p_empty.join()
+        for p in procs:
+            p.join()
+        pbarProc.join()
+        raise
+
+done_q.put('STOP')
+pbarProc.join()
+
+# inFile = inDir + "0627.yaml"
+# with codecs.open(inFile, mode = 'r', encoding = 'utf-8') as handle:
+#     content = handle.read()
+# y = yaml.load(content, Loader = Loader)
+# print(len(y))
+# parsed = ""
+# for page in y:
+#     parsed += assembleEntry(page) + '\n\n'
+
+# outFile = outDir + "0627.babylon"
+# with codecs.open(outFile, mode = 'w', encoding = 'utf-8') as handle:
+#     handle.write("\n#stripmethod=keep\n#sametypesequence=h\n\n")
+#     handle.write(parsed)
+
+# print(time.time()-now)
+
+# assembleHelper((627, inFile, outFile))
+
+# p = multip.Pool(nprocs)
+# try:
+#     p.map(assembleHelper, inputs)
+# except:
+#     p.close()
