@@ -269,6 +269,7 @@ def assembleEntry(y):
         adj_forms = [form for form in adj_forms if len(form.split(' ')) == 1]
         titles.extend(adj_forms)
     titles = unique(titles)
+
     if s.strip() == "":
         s = "Empty article."
     s = u'|'.join(titles) + u"\n" + s.strip()
