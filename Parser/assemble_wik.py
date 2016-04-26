@@ -234,12 +234,23 @@ def assembleEntry(y):
             #     s += u":"
             s += u" {0}".format(gloss)
         s += prep_string(", ".join(synonyms[entry_num - 1]) + u"." if synonyms[entry_num - 1] else "", " Synonyms: ")
-        s += prep_string(etymologies[entry_num - 1], u" Etymology: ")
+        # s += prep_string(etymologies[entry_num - 1], u" Etymology: ")
+
+    # Etymologies
+    etymologies_filtered = [etym for etym in etymologies if etym]
+    if etymologies_filtered:
+        s += '<BR><BR><B>Etymology:</B>'
+        if len(etymologies_filtered) == 1:
+            s += etymologies_filtered[0]
+        else:
+            for i in range(0, len(glosses)):
+                if etymologies[i]:
+                    s += u" {0}. {1}".format(roman.int_to_roman(i + 1), etymologies[i])
 
     # Examples and Quotes
     examples_flat = [example for entry in examples for examples in entry for example in examples if example]
     if examples_flat:
-        s += u"<BR><B>Examples:</B>"
+        s += u"<BR><BR><B>Examples:</B>"
         for (num_example, example) in enumerate(examples_flat, 1):
             if len(examples_flat) == 1:
                 s += " " + example
@@ -248,7 +259,7 @@ def assembleEntry(y):
 
     quotes_flat = [quote for entry in quotations for quotes in entry for quote in quotes if quote]
     if quotes_flat:
-        s += u"<BR><B>Quotations:</B>"
+        s += u"<BR><BR><B>Quotations:</B>"
         for (num_quote, quote) in enumerate(quotes_flat, 1):
             if len(quotes_flat) == 1:
                 s += u" " + quote
@@ -374,27 +385,3 @@ for p in procs:
 
 done_q.put('STOP')
 pbarProc.join()
-
-# inFile = inDir + "0627.yaml"
-# with codecs.open(inFile, mode = 'r', encoding = 'utf-8') as handle:
-#     content = handle.read()
-# y = yaml.load(content, Loader = Loader)
-# print(len(y))
-# parsed = ""
-# for page in y:
-#     parsed += assembleEntry(page) + '\n\n'
-
-# outFile = outDir + "0627.babylon"
-# with codecs.open(outFile, mode = 'w', encoding = 'utf-8') as handle:
-#     handle.write("\n#stripmethod=keep\n#sametypesequence=h\n\n")
-#     handle.write(parsed)
-
-# print(time.time()-now)
-
-# assembleHelper((627, inFile, outFile))
-
-# p = multip.Pool(nprocs)
-# try:
-#     p.map(assembleHelper, inputs)
-# except:
-#     p.close()

@@ -22,7 +22,7 @@ import time
 # apiLink = 'https://en.wiktionary.org/w/api.php'
 apiLink = 'http://localhost/mediawiki/api.php'
 
-citePattern = r"\s*\*\s*\{\{seeCites\}\}|\{\{rfdate\}\},?.*\n|\{\{RQ:.*\}\}.*\n|\{\{rfquotek\|.*?\}\}|^.*\(\d{4}\-\d{4}\)\n"
+citePattern = r"\s*\*\s*\{\{seeCites\}\}|\{\{rfdate\}\},?.*\n|\{\{RQ:.*\}\}.*\n|\{\{rfquotek\|.*?\}\}|^.*\(\d{4}\-\d{4}\)\n|\{\{senseid\|.*?\}\}"
 
 def filter_wikitext(s):
     s = re.sub(citePattern, "", s, flags = re.MULTILINE)
@@ -121,12 +121,9 @@ def parse_yaml_files(files):
     
             counter = 0
             now = time.time()
-            for s in query_strings:
-                # print(counter)
-                # print(len(s))
+            for (i, s) in enumerate(query_strings):
             
                 parsed = parse_wikitext(s)
-                # print(parsed)
     
                 # Map elements back, identified by their id, by iterating over the html nodes
                 # with soup
