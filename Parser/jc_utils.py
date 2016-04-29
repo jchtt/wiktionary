@@ -15,3 +15,14 @@ def _unique(seq, idfun=None):
       if x not in seen:
         seen.add(x)
         yield x
+
+def int_to_alph(i):
+    if i <= 0:
+        raise Exception("Argument needs to be positive")
+    else:
+        ret = ""
+        while i > 0:
+            r = (i - 1) % 26
+            ret = chr(ord('a') + r) + ret
+            i = (i - 1)/ 26
+        return ret

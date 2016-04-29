@@ -10,7 +10,7 @@ from yaml import CLoader as Loader, CDumper as Dumper
 # Regex
 import re
 
-from jc_utils import unique
+from jc_utils import unique, int_to_alph
 
 # Roman numerals
 import roman
@@ -106,6 +106,11 @@ def clean_synonyms(l):
     l = [re.sub(r'^Wikisaurus:', '', elem) for elem in l]
     return unique(l)
 
+def punctuate_phrase(s):
+    if not re.search(r'[\.,;:!?](</[iI]>|</bB>)+$', s):
+        s += u';'
+    return s
+
 def assembleEntry(y):
     glosses = []
     examples = []
@@ -116,11 +121,12 @@ def assembleEntry(y):
     partsOfSpeech = []
     partsOfSpeechHeads = []
     etymology_entries = set();
+    etymology_dict = {}
     synonyms = []
     word_forms = []
 
     # Preprocessing
-    for entry in y.get('entries', []):
+    for (entry_num, entry) in enumerate(y.get('entries', [])):
         # Parts of speech
         psos = entry.get('partsOfSpeech') or []
         try:
@@ -178,17 +184,18 @@ def assembleEntry(y):
         quotations.append(quote_entry)
 
         etymology_text = stripHtml(entry.get('etymology', ''))
-        if etymology_text not in etymology_entries:
-            etymology_entries.add(etymology_text)
+        if not etymology_dict.has_key(etymology_text):
+            etymology_dict[etymology_text] = entry_num
             etymologies.append(etymology_text)
+        # if etymology_text not in etymology_entries:
+        #     etymology_entries.add(etymology_text)
+        #     etymologies.append(etymology_text)
         else:
-            etymologies.append('')
+            etymologies.append(u"See {0}.".format(roman.int_to_roman(etymology_dict[etymology_text] + 1)))
 
     # Assemble string
 
-    # Title
     s = u""
-    # s += y['title'] + "\t"
 
     # Pronunciations
     entry_pronuncs = False
@@ -205,7 +212,7 @@ def assembleEntry(y):
         if entry_num >= 2:
             s += "<BR>"
         if not single_entry:
-            s +=u"{0}. ".format(roman.int_to_roman(entry_num))
+            s +=u"<B>{0}.</B> ".format(roman.int_to_roman(entry_num))
         if entry_pronuncs:
             s += prep_string(pronunciations[entry_num - 1])
         s += partsOfSpeech[entry_num - 1]
@@ -233,6 +240,21 @@ def assembleEntry(y):
             # else:
             #     s += u":"
             s += u" {0}".format(gloss)
+
+            # Examples
+            gloss_examples = examples[entry_num - 1][gloss_num - 1]
+            gloss_examples = [example.strip() for example in  gloss_examples]
+            gloss_examples = [example for example in gloss_examples if example]
+            if len(gloss_examples) > 1:
+                punctuated = [punctuate_phrase(example) for example in gloss_examples[0:-1]]
+                punctuated.append(gloss_examples[-1])
+            else:
+                punctuated = gloss_examples
+            if punctuated:
+                s += u" ["
+                s += ' '.join(punctuated)
+                s += u"]"
+
         s += prep_string(", ".join(synonyms[entry_num - 1]) + u"." if synonyms[entry_num - 1] else "", " Synonyms: ")
         # s += prep_string(etymologies[entry_num - 1], u" Etymology: ")
 
@@ -245,31 +267,54 @@ def assembleEntry(y):
         else:
             for i in range(0, len(glosses)):
                 if etymologies[i]:
-                    s += u" {0}. {1}".format(roman.int_to_roman(i + 1), etymologies[i])
+                    s += u" <B>{0}.</B> {1}".format(roman.int_to_roman(i + 1), etymologies[i])
 
-    # Examples and Quotes
-    examples_flat = [example for entry in examples for examples in entry for example in examples if example]
-    if examples_flat:
-        s += u"<BR><BR><B>Examples:</B>"
-        for (num_example, example) in enumerate(examples_flat, 1):
-            if len(examples_flat) == 1:
-                s += " " + example
-            else:
-                s += u" {0:d}. {1}".format(num_example, example)
+    # Examples
+    # examples_flat = [example for entry in examples for examples in entry for example in examples if example]
+    # if examples_flat:
+    #     s += u"<BR><BR><B>Examples:</B>"
+    #     for (num_example, example) in enumerate(examples_flat, 1):
+    #         if len(examples_flat) == 1:
+    #             s += " " + example
+    #         else:
+    #             s += u" {0:d}. {1}".format(num_example, example)
 
+    # Quotes
     quotes_flat = [quote for entry in quotations for quotes in entry for quote in quotes if quote]
     if quotes_flat:
         s += u"<BR><BR><B>Quotations:</B>"
-        for (num_quote, quote) in enumerate(quotes_flat, 1):
-            if len(quotes_flat) == 1:
-                s += u" " + quote
-            else:
-                s += u" {0:d}. {1}".format(num_quote, quote)
+    for (gloss_num, gloss_quotations) in enumerate(quotations, 1):
+        gloss_quotes_flat = [quote for entry_quotations in gloss_quotations for quote in entry_quotations if quote]
+        if gloss_quotes_flat:
+            if not single_entry:
+                s += u" <B>{0}.</B>".format(roman.int_to_roman(gloss_num))
+            for (sense_num, entry_quotations) in enumerate(gloss_quotations, 1):
+                if any(entry_quotations):
+                    s += u" {0:d}.".format(sense_num)
+                    for (quote_num, quote) in enumerate(entry_quotations, 1):
+                        if len(entry_quotations) > 1:
+                            s += u" {0})".format(int_to_alph(quote_num))
+                        s += u" " + quote
+            
+    # quotes_flat = [quote for entry in quotations for quotes in entry for quote in quotes if quote]
+    # if quotes_flat:
+    #     s += u"<BR><BR><B>Quotations:</B>"
+    #     for (num_quote, quote) in enumerate(quotes_flat, 1):
+    #         if len(quotes_flat) == 1:
+    #             s += u" " + quote
+    #         else:
+    #             s += u" {0:d}. {1}".format(num_quote, quote)
 
-    s = escape_characters(s)
+    if s.strip() == "":
+        s = "Empty article."
+    body = escape_characters(s).strip()
+    s = y['title'] + u"\n" + body
+    articles = [s]
+    body = u'From <B>{0}</B><BR>'.format(y['title']) + body
 
     word_forms_flat = [form for entry in word_forms for form in entry if form]
     titles = [y['title']]
+    # titles = []
     titles.extend(word_forms_flat)
     if 'verb' in partsOfSpeechHeads:
         titles.extend(en.lexeme(y['title']))
@@ -280,10 +325,12 @@ def assembleEntry(y):
         adj_forms = [form for form in adj_forms if len(form.split(' ')) == 1]
         titles.extend(adj_forms)
     titles = unique(titles)
+    titles.remove(y['title'])
 
-    if s.strip() == "":
-        s = "Empty article."
-    s = u'|'.join(titles) + u"\n" + s.strip()
+    # s = u'|'.join(titles) + u"\n" + s.strip()
+    for title in titles:
+        articles.append(title + u"\n" + body)
+    s = "\n\n".join(articles)
 
     # return escape_characters(contract_tabs(s))
     return s
