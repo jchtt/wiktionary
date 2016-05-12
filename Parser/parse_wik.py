@@ -22,7 +22,7 @@ import time
 # apiLink = 'https://en.wiktionary.org/w/api.php'
 apiLink = 'http://localhost/mediawiki/api.php'
 
-citePattern = r"\s*\*\s*\{\{seeCites\}\}|\{\{rfdate\}\},?.*\n|\{\{RQ:.*\}\}.*\n|\{\{rfquotek\|.*?\}\}|^.*\(\d{4}\-\d{4}\)\n|\{\{senseid\|.*?\}\}"
+citePattern = r"\s*\*\s*\{\{seeCites\}\}|\{\{rfdate\}\},?.*\n|\{\{RQ:.*\}\}.*\n|\{\{rfquotek\|.*?\}\}|^.*\(\d{4}\-\d{4}\)\n|(^\s*)?\{\{senseid\|.*?\}\}\s*"
 
 def filter_wikitext(s):
     s = re.sub(citePattern, "", s, flags = re.MULTILINE)

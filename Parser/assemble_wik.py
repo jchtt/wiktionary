@@ -29,6 +29,10 @@ import glob
 
 from tqdm import tqdm
 
+# Options
+# how to format lists, possible values: html, no, manual
+opt_list = 'html'
+
 def escape_characters(text):
     # table = {0xa: '\\n', 0x5c: '\\'}
     # return text.translate(table)
@@ -234,12 +238,19 @@ def assembleEntry(y):
 
         # Glosses
         single_gloss = len(entry_glosses) == 1
+
+        if opt_list == 'html' and not single_gloss:
+            s += u"<OL>"
+
         for (gloss_num, gloss) in enumerate(entry_glosses, 1):
             if not single_gloss:
-                s += u" {0:d}.".format(gloss_num)
+                if opt_list == 'no':
+                    s += u" {0:d}. ".format(gloss_num)
+                elif opt_list == 'html':
+                    s += u"<LI>"
             # else:
             #     s += u":"
-            s += u" {0}".format(gloss)
+            s += u"{0}".format(gloss)
 
             # Examples
             gloss_examples = examples[entry_num - 1][gloss_num - 1]
@@ -254,6 +265,12 @@ def assembleEntry(y):
                 s += u" ["
                 s += ' '.join(punctuated)
                 s += u"]"
+
+            if opt_list == 'html':
+                s += u"</LI>"
+
+        if opt_list == 'html' and not single_gloss:
+            s += u"</OL>"
 
         s += prep_string(", ".join(synonyms[entry_num - 1]) + u"." if synonyms[entry_num - 1] else "", " Synonyms: ")
         # s += prep_string(etymologies[entry_num - 1], u" Etymology: ")
@@ -313,19 +330,31 @@ def assembleEntry(y):
     body = u'From <B>{0}</B><BR>'.format(y['title']) + body
 
     word_forms_flat = [form for entry in word_forms for form in entry if form]
-    titles = [y['title']]
+    word = y['title']
+    titles = [word]
     # titles = []
-    titles.extend(word_forms_flat)
+    base_form = True
     if 'verb' in partsOfSpeechHeads:
-        titles.extend(en.lexeme(y['title']))
+        if word == en.lemma(word):
+            titles.extend(en.lexeme(word))
+        else:
+            base_form = False
     if 'noun' in partsOfSpeechHeads:
-        titles.append(en.pluralize(y['title']))
+        if word == en.singularize(word):
+            titles.append(en.pluralize(word))
+        else:
+            base_form = False
     if 'adjective' in partsOfSpeechHeads:
-        adj_forms = [en.comparative(y['title']), en.superlative(y['title'])]
+        adj_forms = [en.comparative(word), en.superlative(word)]
         adj_forms = [form for form in adj_forms if len(form.split(' ')) == 1]
-        titles.extend(adj_forms)
+        if word in adj_forms:
+            base_form = False
+        else:
+            titles.extend(adj_forms)
+    if base_form:
+        titles.extend(word_forms_flat)
     titles = unique(titles)
-    titles.remove(y['title'])
+    titles.remove(word)
 
     # s = u'|'.join(titles) + u"\n" + s.strip()
     for title in titles:
